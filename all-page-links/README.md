@@ -39,7 +39,7 @@ _Букмарклет полезен в основном для пользова
   * **Яндекс.Браузер v17** ( _Bookmarklet_ )
   * **Opera v45-46** ( _Bookmarklet_ )
   * В браузерах **Internet Explorer** и **Opera v12** работать не будет!
-  ---
+---
 
 ### Скриншот
 ![Скриншот](https://github.com/Eric-Draven/bookmarklets/raw/master/all-page-links/images/example.png)
