@@ -34,9 +34,9 @@ _Букмарклет полезен в основном для пользова
   * **Firefox v38+** ( _Bookmarklet_, _Custom Buttons_ )
     * **v11 и ниже** - работать не будет!
     * **v12-37** - будет работать не на всех страницах, содержащих ссылки, которые необходимо декодировать.
-  * **Chrome v59+** ( _Bookmarklet_ )
+  * **Google Chrome v59+** ( _Bookmarklet_ )
   * **Яндекс.Браузер v17+** ( _Bookmarklet_ )
-  * **Opera v45+* ( _Bookmarklet_ )
+  * **Opera v45+** ( _Bookmarklet_ )
   * В браузерах **Internet Explorer** и **Opera v12** работать не будет!
 
 ### Скриншот
