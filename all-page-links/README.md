@@ -1,4 +1,4 @@
-# All Page Links ( Bookmarklet ) v0.9.4 от 25.06.2017
+# All Page Links ( Bookmarklet ) v0.9.5 от 15.07.2017
 
 ## Получить код
 * [All Page Links ( Bookmarklet )](https://github.com/Eric-Draven/bookmarklets/raw/master/all-page-links/scripts/all-page-links-bookmarklet.txt) - _Чтобы начать пользоваться букмарклетом, создайте в браузере закладку с любым именем, а вместо ссылки, вставьте весь текст из открывшегося по ссылке файла._
