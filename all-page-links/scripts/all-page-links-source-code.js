@@ -153,11 +153,24 @@ javascript: (function () {
 		};
 	}
 	();
+
 	function infoBlock() {
 		document.getElementById('asl-info-b').removeEventListener('click', infoBlock);
 		var divInfo = document.createElement('div');
 		divInfo.setAttribute('id', 'all-page-links-info');
-		divInfo.innerHTML = '<div>Bookmarklet "<a href="https://github.com/Eric-Draven/bookmarklets/tree/master/all-page-links" class="js-bold" title="Домашняя страница" target="_blank">All Page Links</a>" v0.9.4 by Eric Draven' + '<div class="js-it">Для пользователей системы продвижения сайтов - userator.ru</div></div>' + '<ul class="js-brdrs"><li><span class="js-bold">Целевые ссылки</span> - список содержит ссылки, отобранные по ключевым словам: <span class="js-bold js-it">контакты, связь, регистрация, корзина, цены, услуги</span> в анкорах и сегментах URL. Внимание! Нет гарантии, что ссылки направят на страницы, нужные для работы.</li>' + '<li><span class="js-bold">Внутренние ссылки</span> - список всех ссылок на данной странице, направляющих на другие страницы данного сайта.</li>' + '<li><span class="js-bold">Внутренние якорные ссылки</span> - эти ссылки помогут направить посетителей, как в определённую часть отдельной страницы сайта, так и в определённую часть текущей страницы, где был добавлен якорь. Существует немало сайтов, весь контент которых размещён на единственной странице и все ссылки на ней являются якорными.</li>' + '<li><span class="js-bold">Внутренние ссылки на файлы</span> - только кликабельные ссылки на следующие типы файлов: <span class="js-bold js-it">.exe, .js, .pdf, .fb2, .epub, .mobi, .txt, .rtf, .doc, .xls, .ppt, .mp3, .mp4, .flv, .swf, .zip, .rar, .7z, .gz, .jpg, .jpeg, .png, .gif, .bmp</span>.</li>' + '<li><span class="js-bold">Поддомены и внешние ссылки</span> - ссылки на поддомены данного домена и на другие сайты.</li></ul>' + '<div class="js-bold">Примечания</div>' + '<ul class="js-brdrs"><li>Ссылки во всём списке и в каждом отдельном списке не повторяются, но:' + '<ul><li>ссылки <span class="js-bold">http://site.ru</span> и <span class="js-bold">https://site.ru</span> - не считаются дубликатами и обе попадут в один из списков если обе присутствуют на странице.</li>' + '<li>ссылки <span class="js-bold">www.site.ru</span> и <span class="js-bold">site.ru</span> - не считаются дубликатами только для списка "<span class="js-bold">Поддомены и внешние ссылки</span>" и обе попадут в этот список если обе присутствуют на странице.</li></ul>' + '<li>Ссылки с символом "&#9660;" открываются в текущей вкладке, остальные в новой вкладке.</li>' + '<li>Ссылки на страницы, присутствующие в истории посещённых страниц браузера, подсвечиваются тёмно-зелёным цветом.</li></ul>';
+		divInfo.innerHTML = '<div>Bookmarklet "<a href="https://github.com/Eric-Draven/bookmarklets/tree/master/all-page-links" class="js-bold" title="Домашняя страница" target="_blank">All Page Links</a>" v0.9.5 by Eric Draven' +
+			'<div class="js-it">Для пользователей системы продвижения сайтов - userator.ru</div></div>' +
+			'<ul class="js-brdrs"><li><span class="js-bold">Целевые ссылки</span> - список содержит ссылки, отобранные по ключевым словам: <span class="js-bold js-it">контакты, связь, регистрация, корзина, цены, услуги</span> в анкорах и сегментах URL. Внимание! Нет гарантии, что ссылки направят на страницы, нужные для работы.</li>' +
+			'<li><span class="js-bold">Внутренние ссылки</span> - список всех ссылок на данной странице, направляющих на другие страницы данного сайта.</li>' +
+			'<li><span class="js-bold">Внутренние якорные ссылки</span> - эти ссылки помогут направить посетителей, как в определённую часть отдельной страницы сайта, так и в определённую часть текущей страницы, где был добавлен якорь. Существует немало сайтов, весь контент которых размещён на единственной странице и все ссылки на ней являются якорными.</li>' +
+			'<li><span class="js-bold">Внутренние ссылки на файлы</span> - только кликабельные ссылки на следующие типы файлов: <span class="js-bold js-it">.exe, .js, .pdf, .fb2, .epub, .mobi, .txt, .rtf, .doc, .xls, .ppt, .mp3, .mp4, .flv, .swf, .zip, .rar, .7z, .gz, .jpg, .jpeg, .png, .gif, .bmp</span>.</li>' +
+			'<li><span class="js-bold">Поддомены и внешние ссылки</span> - ссылки на поддомены данного домена и на другие сайты.</li></ul>' +
+			'<div class="js-bold">Примечания</div>' +
+			'<ul class="js-brdrs"><li>Ссылки во всём списке и в каждом отдельном списке не повторяются, но:' +
+			'<ul><li>ссылки <span class="js-bold">http://site.ru</span> и <span class="js-bold">https://site.ru</span> - не считаются дубликатами и обе попадут в один из списков если обе присутствуют на странице.</li>' +
+			'<li>ссылки <span class="js-bold">www.site.ru</span> и <span class="js-bold">site.ru</span> - не считаются дубликатами только для списка "<span class="js-bold">Поддомены и внешние ссылки</span>" и обе попадут в этот список если обе присутствуют на странице.</li></ul>' +
+			'<li>Ссылки с символом "&#9660;" открываются в текущей вкладке, остальные в новой вкладке.</li>' +
+			'<li>Ссылки на страницы, присутствующие в истории посещённых страниц браузера, подсвечиваются тёмно-зелёным цветом.</li></ul>';
 		divLists.insertBefore(divInfo, divLists.firstChild);
 		document.getElementById('asl-info-b').setAttribute('class', 'st-red');
 		document.getElementById('asl-info-b').addEventListener('click', function () {
@@ -190,7 +203,7 @@ javascript: (function () {
 			divLists.appendChild(divLinks);
 			for (i in x) {
 				try {
-					var oneLink = x[i].trim(),
+					var oneLink = x[i].trim(), /*!*/
 					listLinks = document.createElement('div');
 					listLinks.setAttribute('class', 'js-link-line js-clr');
 					listLinks.innerHTML = '<div class="js-float-l js-w92"><a class="' + y + '" target="_blank" href=' + oneLink + '>' + oneLink + '</a></div><div class="js-float-l js-w8"><div class="js-parent-link"><a target="_parent" href=' + oneLink + '>&#9660;</a></div></div>';
@@ -247,15 +260,46 @@ javascript: (function () {
 		style.innerHTML = css;
 		head.appendChild(style);
 	}
+
 	if (divContainer) {
 		closeList();
 	} else {
 		window.scrollTo(0, 0);
-		addStyle('#all-page-links-container, #all-page-links, #all-page-links div, #all-page-links span, #all-page-links ul, #all-page-links ul li, #all-page-links a{margin:0;padding:0;border:0;text-align:left;font:normal 400 13px/20px arial,sans-serif !important;text-decoration:none !important;text-transform:none !important;vertical-align:baseline;direction:ltr;}' + '#all-page-links-container{padding:8px 0 !important;height:auto;color:#444;background:#fff;position:absolute;left:14px;top:14px;min-width:360px;width:50%;z-index:2147483647;-moz-box-shadow:0 12px 16px rgba(0,0,0,0.4);-webkit-box-shadow:0 12px 16px rgba(0,0,0,0.4);box-shadow:0 12px 16px rgba(0,0,0,0.4);}' + '#all-page-links{padding:0 8px !important;height:100%;overflow:auto;}' + '#all-page-links-info, .js-title{margin-left:8px !important;padding:6px 0 4px 0 !important;}' + '#all-page-links-info a{color:#237700;}' + '#all-page-links-info ul.js-brdrs{margin:8px 0;padding:6px 0;border-top:1px solid #bbb;border-bottom:1px solid #bbb;}' + '#all-page-links-info ul li{list-style:circle outside;margin-left:16px;}' + '#all-page-links-list .js-w92 a{padding:1px 4px 1px 8px;}' + '#all-page-links-list .js-w8 a{margin-left:1px;height:100%;text-align:center;}' + '#all-page-links-list a{background:#444 !important;color:#fff !important;display:block;word-break:break-all;}' + '#all-page-links-list a:visited{background:#3d5236 !important;}' + '#all-page-links-list a:hover{background:#333 !important;color:#fff !important;}' + '#all-page-links #asl-info-b, #all-page-links .asl-close-b{font-weight:700 !important;cursor:pointer;}' + '#all-page-links-info a:hover, #asl-info-b:hover, .asl-close-b:hover, .st-red{color:#ca0000 !important;}' + '#all-page-links .js-bold{font-weight:700 !important;}' + '#all-page-links .js-it{font-style:italic !important;}' + '.js-link-line{margin:0 0 1px 0 !important;width:100%;position:relative;}' + '.js-float-l{float:left;}' + '.js-float-r{float:right;}' + '.js-w92{width:92%;}' + '.js-w8{width:8%;}' + '.js-parent-link{width:inherit !important;height:100%;position:absolute;}' + '.js-clr:before, .js-clr:after{content:"";display:table;}' + '.js-clr:after{clear:both;}' + '.js-clr{zoom:1;}' + '.targetLink{border-left:8px solid #009cff !important;}' + '.internalLink{border-left:8px solid #ffe000 !important;}' + '.anchorLink{border-left:8px solid #ffa900 !important;}' + '.fileLink{border-left:8px solid #ff00ba !important;}' + '.externalLink{border-left:8px solid #888 !important;}');
+		addStyle('#all-page-links-container, #all-page-links, #all-page-links div, #all-page-links span, #all-page-links ul, #all-page-links ul li, #all-page-links a{margin:0;padding:0;border:0;text-align:left;color:#444;font:normal 400 13px/20px arial,sans-serif !important;text-decoration:none !important;transform:none !important;text-transform:none !important;vertical-align:baseline;direction:ltr;}' +
+			'#all-page-links-container{padding:8px 0 !important;height:auto;background:#fff;position:absolute;left:14px;top:14px;min-width:360px;width:50%;z-index:2147483647;-moz-box-shadow:0 12px 16px rgba(0,0,0,0.4);-webkit-box-shadow:0 12px 16px rgba(0,0,0,0.4);box-shadow:0 12px 16px rgba(0,0,0,0.4);}' +
+			'#all-page-links{padding:0 8px !important;height:100%;overflow:auto;}' +
+			'#all-page-links-info, .js-title{margin-left:8px !important;padding:6px 0 4px 0 !important;}' +
+			'#all-page-links-info a{color:#237700;}' +
+			'#all-page-links-info ul.js-brdrs{margin:8px 0;padding:6px 0;border-top:1px solid #bbb;border-bottom:1px solid #bbb;}' +
+			'#all-page-links-info ul li{list-style:circle outside;margin-left:16px;}' +
+			'#all-page-links-list .js-w92 a{padding:1px 4px 1px 8px;}' +
+			'#all-page-links-list .js-w8 a{margin-left:1px;height:100%;text-align:center;}' +
+			'#all-page-links-list a{background:#444 !important;color:#fff !important;display:block;word-break:break-all;}' +
+			'#all-page-links-list a:visited{background:#3d5236 !important;}' +
+			'#all-page-links-list a:hover{background:#333 !important;color:#fff !important;}' +
+			'#all-page-links #asl-info-b, #all-page-links .asl-close-b{font-weight:700 !important;cursor:pointer;}' +
+			'#all-page-links-info a:hover, #asl-info-b:hover, .asl-close-b:hover, .st-red{color:#ca0000 !important;}' +
+			'#all-page-links .js-bold{font-weight:700 !important;}' +
+			'#all-page-links .js-it{font-style:italic !important;}' +
+			'.js-link-line{margin:0 0 1px 0 !important;width:100%;position:relative;}' +
+			'.js-float-l{float:left;}' +
+			'.js-float-r{float:right;}' +
+			'.js-w92{width:92%;}' +
+			'.js-w8{width:8%;}' +
+			'.js-parent-link{width:inherit !important;height:100%;position:absolute;}' +
+			'.js-clr:before, .js-clr:after{content:"";display:table;}' +
+			'.js-clr:after{clear:both;}' +
+			'.js-clr{zoom:1;}' +
+			'.targetLink, .targetLink:hover{border-left:8px solid #009cff !important;}' +
+			'.internalLink, .internalLink:hover{border-left:8px solid #ffe000 !important;}' +
+			'.anchorLink, .anchorLink:hover{border-left:8px solid #ffa900 !important;}' +
+			'.fileLink, .fileLink:hover{border-left:8px solid #ff00ba !important;}' +
+			'.externalLink, .externalLink:hover{border-left:8px solid #888 !important;}');
 		divContainer = document.createElement('div');
 		divContainer.id = 'all-page-links-container';
 		divContainer.innerHTML = '<div id="all-page-links"></div>';
 		document.getElementsByTagName('body')[0].appendChild(divContainer);
+
 		var allPageLinks = document.links,
 		words = /support|feedback|registr|register|contact|kontact|contakt|kontakt|signin|signup|price|prace|prase|tseny|ceni|cart|korzina|corzina|uslugi|контакт|связь|регистрация|корзина|цены|услуг|товар|прайс|кординаты|поддержка/i,
 		extension = /exe|js|pdf|fb2|epub|mobi|txt|rtf|doc|xls|ppt|mp3|mp4|flv|swf|zip|rar|7z|gz|jpg|jpeg|png|gif|bmp/i,
@@ -279,6 +323,7 @@ javascript: (function () {
 				l1 = l1.replace('www.', '');
 			}
 			var l4 = l1.replace(linkProtocol + '//' + linkHostname, '');
+
 			if (l1.indexOf('%') >= 0) {
 				l1 = decodeChar(l1);
 			}
@@ -312,6 +357,7 @@ javascript: (function () {
 				}
 			}
 		}
+
 		if ((targetLinks.length + internalLinks.length + anchorLinks.length + fileLinks.length + externalLinks.length) === 0) {
 			divLists = document.getElementById('all-page-links');
 			divLists.innerHTML = '<div class="js-title js-clr"><span class="js-float-l js-bold st-red">На странице нет полезных ссылок</span><span class="js-float-r"><span id="asl-info-b" title="О букмарклете">Информация</span> / <span id="asl-close-b" class="asl-close-b" title="Скрыть пустой список">Скрыть</span></span></div>';
