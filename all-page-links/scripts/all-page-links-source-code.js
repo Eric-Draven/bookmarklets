@@ -1,7 +1,10 @@
 javascript: (function () {
 	'use strict';
 	var i,
+	decodedHost,
+	pageHref = window.top.location.href,
 	pageHostname = window.top.location.hostname,
+	pageHostnameRAW = window.top.location.hostname,
 	divContainer = document.getElementById('all-page-links-container'),
 	divLists = document.getElementById('all-page-links'),
 	closeButton = 0,
@@ -153,12 +156,17 @@ javascript: (function () {
 		};
 	}
 	();
+	if (pageHostname.match(/xn--/)) {
+		decodedHost = punycode.ToUnicode(pageHostname);
+		pageHref = pageHref.replace(pageHostname, decodedHost);
+		pageHostname = pageHostname.replace(pageHostname, decodedHost);
+	}
 
 	function infoBlock() {
 		document.getElementById('asl-info-b').removeEventListener('click', infoBlock);
 		var divInfo = document.createElement('div');
 		divInfo.setAttribute('id', 'all-page-links-info');
-		divInfo.innerHTML = '<div>Bookmarklet "<a href="https://github.com/Eric-Draven/bookmarklets/tree/master/all-page-links" class="js-bold" title="Домашняя страница" target="_blank">All Page Links</a>" v0.9.6 by Eric Draven' +
+		divInfo.innerHTML = '<div>Bookmarklet "<a href="https://github.com/Eric-Draven/bookmarklets/tree/master/all-page-links" class="js-bold" title="Домашняя страница" target="_blank">All Page Links</a>" v0.9.7 by Eric Draven' +
 			'<div class="js-it">Для пользователей системы продвижения сайтов - userator.ru</div>' +
 			'<div>Букмарклет создаёт список всех ссылок на странице сайта (только <span class="js-bold">HTTP</span>, <span class="js-bold">HTTPS</span>) и распределяет их по категориям:</div>' +
 			'<ul class="js-brdrs"><li><span class="js-bold">Целевые ссылки</span> - ссылки, отобранные по ключевым словам: <span class="js-bold js-it">контакты, связь, регистрация, корзина, цены, услуги</span> в анкорах и сегментах URL. Внимание! Нет гарантии, что ссылки направят на страницы, нужные для работы.</li>' +
@@ -169,9 +177,10 @@ javascript: (function () {
 			'<div class="js-bold">Примечания</div>' +
 			'<ul class="js-brdrs"><li>Ссылки во всём списке и в каждом отдельном списке не повторяются, но:' +
 			'<ul><li>ссылки <span class="js-bold">http://site.ru</span> и <span class="js-bold">https://site.ru</span> - не считаются дубликатами и обе попадут в один из списков если обе присутствуют на странице.</li>' +
-			'<li>ссылки <span class="js-bold">www.site.ru</span> и <span class="js-bold">site.ru</span> - не считаются дубликатами только для списка "<span class="js-bold">Поддомены и внешние ссылки</span>" и обе попадут в этот список если обе присутствуют на странице.</li></ul>' +
+			'<li>ссылки <span class="js-bold">www.site.ru</span> и <span class="js-bold">site.ru</span> - не считаются дубликатами только для списка "<span class="js-bold">Поддомены и внешние ссылки</span>" и обе попадут в этот список если обе присутствуют на странице.</li></ul></li>' +
 			'<li>Ссылки с символом "&#9660;" открываются в текущей вкладке, остальные в новой вкладке.</li>' +
 			'<li>Ссылки на страницы, присутствующие в истории посещённых страниц браузера, подсвечиваются тёмно-зелёным цветом.</li>' +
+			'<li>Если в списке присутствует ссылка на текущую страницу сайта, она подсвечивается тёмно-красным цветом.</li>' +
 			'<li>Ссылка на главную страницу сайта добавляется в список даже если её нет на странице.</li></ul>';
 		divLists.insertBefore(divInfo, divLists.firstChild);
 		document.getElementById('asl-info-b').setAttribute('class', 'st-red');
@@ -189,14 +198,14 @@ javascript: (function () {
 			x = i.sort();
 			if (closeButton === 0) {
 				divLists = document.getElementById('all-page-links');
-				divLists.innerHTML = '<div class="js-title js-clr"><span class="js-float-l js-bold">' + z + ' ( ' + i.length + ' )</span><span class="js-float-r"><span id="asl-info-b" title="О букмарклете">Информация</span> / <span id="asl-close-b-' + num + '" class="asl-close-b" title="Скрыть все списки">Скрыть</span></span></div>';
+				divLists.innerHTML = '<div class="js-title"><span class="js-float-l js-bold">' + z + ' ( ' + i.length + ' )</span><span class="js-float-r"><span id="asl-info-b" title="О букмарклете">Информация</span> / <span id="asl-close-b-' + num + '" class="asl-close-b" title="Скрыть все списки">Скрыть</span></span></div>';
 				document.getElementById('asl-info-b').addEventListener('click', infoBlock);
 				document.getElementById('asl-close-b-' + num).addEventListener('click', closeList);
 				closeButton = 1;
 			} else {
 				var divButtons = document.createElement('div');
 				divButtons.setAttribute('class', 'js-title');
-				divButtons.innerHTML = '<div class="js-clr"><span class="js-float-l js-bold">' + z + ' ( ' + i.length + ' )</span><span class="js-float-r"><span id="asl-close-b-' + num + '" class="asl-close-b" title="Скрыть все списки">Скрыть</span></div>';
+				divButtons.innerHTML = '<span class="js-float-l js-bold">' + z + ' ( ' + i.length + ' )</span><span class="js-float-r"><span id="asl-close-b-' + num + '" class="asl-close-b" title="Скрыть все списки">Скрыть</span>';
 				divLists.appendChild(divButtons);
 				document.getElementById('asl-close-b-' + num).addEventListener('click', closeList);
 			}
@@ -207,7 +216,7 @@ javascript: (function () {
 				try {
 					var oneLink = x[i].trim(), /*!*/
 					listLinks = document.createElement('div');
-					listLinks.setAttribute('class', 'js-link-line js-clr');
+					listLinks.setAttribute('class', 'js-link-line');
 					listLinks.innerHTML = '<div class="js-float-l js-w92"><a class="' + y + '" target="_blank" href=' + oneLink + '>' + oneLink + '</a></div><div class="js-float-l js-w8"><div class="js-parent-link"><a target="_parent" href=' + oneLink + '>&#9660;</a></div></div>';
 					divLinks.appendChild(listLinks);
 				} catch (err) {}
@@ -266,11 +275,11 @@ javascript: (function () {
 	if (divContainer) {
 		closeList();
 	} else {
-		window.scrollTo(0, 0);
+		window.top.scrollTo(0, 0);
 		addStyle('#all-page-links-container, #all-page-links, #all-page-links div, #all-page-links span, #all-page-links ul, #all-page-links ul li, #all-page-links a{margin:0;padding:0;border:0;text-align:left;color:#444;font:normal 400 13px/20px arial,sans-serif !important;text-decoration:none !important;transform:none !important;text-transform:none !important;transition:all 0s ease 0s !important;vertical-align:baseline;direction:ltr;}' +
 			'#all-page-links-container{padding:8px 0 !important;height:auto;background:#fff;position:absolute;left:14px;top:14px;min-width:360px;width:50%;z-index:2147483647;-moz-box-shadow:0 12px 16px rgba(0,0,0,0.4);-webkit-box-shadow:0 12px 16px rgba(0,0,0,0.4);box-shadow:0 12px 16px rgba(0,0,0,0.4);}' +
 			'#all-page-links{padding:0 8px !important;height:100%;overflow:auto;}' +
-			'#all-page-links-info, .js-title{margin-left:8px !important;padding:6px 0 4px 0 !important;}' +
+			'#all-page-links-info, .js-title{margin:0 1px 0 8px !important;padding:6px 0 4px 0 !important;}' +
 			'#all-page-links-info a{color:#237700;}' +
 			'#all-page-links-info ul.js-brdrs{margin:8px 0;padding:6px 0;border-top:1px solid #bbb;border-bottom:1px solid #bbb;}' +
 			'#all-page-links-info ul li{list-style:circle outside;margin-left:16px;}' +
@@ -278,20 +287,22 @@ javascript: (function () {
 			'#all-page-links-list .js-w8 a{margin-left:1px;height:100%;text-align:center;}' +
 			'#all-page-links-list a{background:#444 !important;color:#fff !important;display:block;word-break:break-all;}' +
 			'#all-page-links-list a:visited{background:#3d5236 !important;}' +
+			'#all-page-links-list a.currentPageLink{background:#523636 !important;}' +
 			'#all-page-links-list a:hover{background:#333 !important;color:#fff !important;}' +
+			'#all-page-links-list a:active{background:#000 !important;color:#fff !important;}' +
 			'#all-page-links #asl-info-b, #all-page-links .asl-close-b{font-weight:700 !important;cursor:pointer;}' +
 			'#all-page-links-info a:hover, #asl-info-b:hover, .asl-close-b:hover, .st-red{color:#ca0000 !important;}' +
 			'#all-page-links .js-bold{font-weight:700 !important;}' +
 			'#all-page-links .js-it{font-style:italic !important;}' +
 			'.js-link-line{margin:0 0 1px 0 !important;width:100%;position:relative;}' +
 			'.js-float-l{float:left;}' +
-			'.js-float-r{float:right;}' +
+			'.js-float-r{float:right;margin-right:2px;}' +
 			'.js-w92{width:92%;}' +
 			'.js-w8{width:8%;}' +
 			'.js-parent-link{width:inherit !important;height:100%;position:absolute;}' +
-			'.js-clr:before, .js-clr:after{content:"";display:table;}' +
-			'.js-clr:after{clear:both;}' +
-			'.js-clr{zoom:1;}' +
+			'.js-title:before, .js-title:after, .js-link-line:before, .js-link-line:after{content:"";display:table;}' +
+			'.js-title:after, .js-link-line:after{clear:both;}' +
+			'.js-title, .js-link-line{zoom:1;}' +
 			'.targetLink, .targetLink:hover{border-left:8px solid #009cff !important;}' +
 			'.internalLink, .internalLink:hover{border-left:8px solid #ffe000 !important;}' +
 			'.anchorLink, .anchorLink:hover{border-left:8px solid #ffa900 !important;}' +
@@ -311,8 +322,8 @@ javascript: (function () {
 		anchorLinks = [],
 		fileLinks = [],
 		externalLinks = [];
-		if (window.location.origin.match(/http/i)) {
-			internalLinks = [window.location.origin + '/'];
+		if (window.top.location.origin.match(/http/i)) {
+			internalLinks = [window.top.location.protocol + '//' + pageHostname + '/'];
 		}
 		for (i = 0; i < allPageLinks.length; i++) {
 			var oneOfArray = allPageLinks[i],
@@ -323,7 +334,7 @@ javascript: (function () {
 			l1 = oneOfArray.toString(),
 			l2 = oneOfArray.innerText,
 			l3 = oneOfArray.innerHTML;
-			if (pageHostname.replace('www.', '') === linkHostname.replace('www.', '') && pageHostname.indexOf('www.') == -1 && linkHostname.indexOf('www.') >= 0) {
+			if (pageHostnameRAW.replace('www.', '') === linkHostname.replace('www.', '') && pageHostnameRAW.indexOf('www.') == -1 && linkHostname.indexOf('www.') >= 0) {
 				linkHostname = linkHostname.replace('www.', '');
 				l1 = l1.replace('www.', '');
 			}
@@ -335,9 +346,12 @@ javascript: (function () {
 			if (l1.indexOf('%') >= 0) {
 				l1 = Win1251ToDOMString(l1);
 			}
-			if (linkHostname.indexOf('xn--') === 0) {
-				var decodedHost = punycode.ToUnicode(linkHostname);
+			if (linkHostname.match(/xn--/)) {
+				decodedHost = punycode.ToUnicode(linkHostname);
 				l1 = l1.replace(linkHostname, decodedHost);
+			}
+			if (l1.match(/xn--/) && l1.match(pageHostnameRAW)) {
+				l1 = l1.replace(pageHostnameRAW, pageHostname);
 			}
 			if (l2 === undefined) {
 				l2 = '';
@@ -365,7 +379,7 @@ javascript: (function () {
 
 		if ((targetLinks.length + internalLinks.length + anchorLinks.length + fileLinks.length + externalLinks.length) === 0) {
 			divLists = document.getElementById('all-page-links');
-			divLists.innerHTML = '<div class="js-title js-clr"><span class="js-float-l js-bold st-red">На странице нет полезных ссылок</span><span class="js-float-r"><span id="asl-info-b" title="О букмарклете">Информация</span> / <span id="asl-close-b" class="asl-close-b" title="Скрыть пустой список">Скрыть</span></span></div>';
+			divLists.innerHTML = '<div class="js-title"><span class="js-float-l js-bold st-red">На странице нет полезных ссылок</span><span class="js-float-r"><span id="asl-info-b" title="О букмарклете">Информация</span> / <span id="asl-close-b" class="asl-close-b" title="Скрыть пустой список">Скрыть</span></span></div>';
 			document.getElementById('asl-info-b').addEventListener('click', infoBlock);
 			document.getElementById('asl-close-b').addEventListener('click', closeList);
 		} else {
@@ -376,8 +390,20 @@ javascript: (function () {
 			placeToDiv(fileLinks, 'fileLink', 'Внутренние ссылки на файлы', '5');
 			placeToDiv(externalLinks, 'externalLink', 'Поддомены и внешние ссылки', '6');
 		}
-		if (window.innerHeight < divContainer.offsetHeight) {
-			addStyle('#all-page-links-container{height:' + Math.round(window.innerHeight * ".85") + 'px !important;}');
+
+		if (pageHref.indexOf('%') >= 0) {
+			pageHref = decodeChar(pageHref);
+		}
+		if (pageHref.indexOf('%') >= 0) {
+			pageHref = Win1251ToDOMString(pageHref);
+		}
+		var viewList = document.querySelectorAll('#all-page-links-list a[href="' + pageHref + '"]');
+		for (i = 0; i < viewList.length; i++) {
+			viewList[i].className += " currentPageLink";
+		}
+
+		if (window.top.innerHeight < divContainer.offsetHeight) {
+			addStyle('#all-page-links-container{height:' + Math.round(window.top.innerHeight * ".85") + 'px !important;}');
 		}
 	}
 })();
