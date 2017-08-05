@@ -3,6 +3,7 @@ javascript: (function () {
 	var i,
 	decodedHost,
 	pageHref = window.top.location.href,
+	pageProtocol = window.top.location.protocol,
 	pageHostname = window.top.location.hostname,
 	pageHostnameRAW = window.top.location.hostname,
 	divContainer = document.getElementById('all-page-links-container'),
@@ -161,12 +162,11 @@ javascript: (function () {
 		pageHref = pageHref.replace(pageHostname, decodedHost);
 		pageHostname = pageHostname.replace(pageHostname, decodedHost);
 	}
-
 	function infoBlock() {
 		document.getElementById('asl-info-b').removeEventListener('click', infoBlock);
 		var divInfo = document.createElement('div');
 		divInfo.setAttribute('id', 'all-page-links-info');
-		divInfo.innerHTML = '<div>Bookmarklet "<a href="https://github.com/Eric-Draven/bookmarklets/tree/master/all-page-links" class="js-bold" title="Домашняя страница" target="_blank">All Page Links</a>" v0.9.7 by Eric Draven' +
+		divInfo.innerHTML = '<div>Bookmarklet "<a href="https://github.com/Eric-Draven/bookmarklets/tree/master/all-page-links" class="js-bold" title="Домашняя страница" target="_blank">All Page Links</a>" v0.9.8 by Eric Draven' +
 			'<div class="js-it">Для пользователей системы продвижения сайтов - userator.ru</div>' +
 			'<div>Букмарклет создаёт список всех ссылок на странице сайта (только <span class="js-bold">HTTP</span>, <span class="js-bold">HTTPS</span>) и распределяет их по категориям:</div>' +
 			'<ul class="js-brdrs"><li><span class="js-bold">Целевые ссылки</span> - ссылки, отобранные по ключевым словам: <span class="js-bold js-it">контакты, связь, регистрация, корзина, цены, услуги</span> в анкорах и сегментах URL. Внимание! Нет гарантии, что ссылки направят на страницы, нужные для работы.</li>' +
@@ -181,7 +181,7 @@ javascript: (function () {
 			'<li>Ссылки с символом "&#9660;" открываются в текущей вкладке, остальные в новой вкладке.</li>' +
 			'<li>Ссылки на страницы, присутствующие в истории посещённых страниц браузера, подсвечиваются тёмно-зелёным цветом.</li>' +
 			'<li>Если в списке присутствует ссылка на текущую страницу сайта, она подсвечивается тёмно-красным цветом.</li>' +
-			'<li>Ссылка на главную страницу сайта добавляется в список даже если её нет на странице.</li></ul>';
+			'<li>Ссылки на главную и текущую страницы сайта добавляются в список даже если их нет на странице.</li></ul>';
 		divLists.insertBefore(divInfo, divLists.firstChild);
 		document.getElementById('asl-info-b').setAttribute('class', 'st-red');
 		document.getElementById('asl-info-b').addEventListener('click', function () {
@@ -313,7 +313,7 @@ javascript: (function () {
 		divContainer.innerHTML = '<div id="all-page-links"></div>';
 		document.getElementsByTagName('body')[0].appendChild(divContainer);
 
-		var allPageLinks = document.links,
+		var allPageLinks = [].slice.call(document.links),
 		words = /support|feedback|registr|register|contact|kontact|contakt|kontakt|signin|signup|price|prace|prase|tseny|ceni|cart|korzina|corzina|uslugi|контакт|связь|регистрация|корзина|цены|услуг|товар|прайс|кординаты|поддержка/i,
 		extension = /exe|js|pdf|fb2|epub|mobi|txt|rtf|doc|xls|ppt|mp3|mp4|flv|swf|zip|rar|7z|gz|jpg|jpeg|png|gif|bmp/i,
 		targetLinks = [],
@@ -321,10 +321,13 @@ javascript: (function () {
 		internalLinks = [],
 		anchorLinks = [],
 		fileLinks = [],
-		externalLinks = [];
-		if (window.top.location.origin.match(/http/i)) {
-			internalLinks = [window.top.location.protocol + '//' + pageHostname + '/'];
-		}
+		externalLinks = [],
+		a1 = document.createElement('a'),
+		a2 = document.createElement('a');
+		a1.href = pageProtocol + '//' + pageHostname + '/';
+		a2.href = pageHref;
+		allPageLinks.push(a1, a2);
+
 		for (i = 0; i < allPageLinks.length; i++) {
 			var oneOfArray = allPageLinks[i],
 			linkProtocol = oneOfArray.protocol,
@@ -357,7 +360,7 @@ javascript: (function () {
 				l2 = '';
 			}
 			if (linkProtocol.match(/http/i)) {
-				if (linkHostname !== pageHostname) {
+				if (linkHostname !== pageHostnameRAW) {
 					externalLinks.push(l1);
 				} else if (!linkPathname.match(/http/i) && !linkSearch.match(/http/i)) {
 					if (l4.substr(-5, 5).indexOf('.') >= 0 && l4.substr(-5, 5).match(extension)) {
